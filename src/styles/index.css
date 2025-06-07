@@ -1,0 +1,21 @@
+* {
+  font-family: "NeoDunggeunmo";
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  width: 100%;
+  max-width: 1024px;
+  height: 100dvh;
+  margin: 0 auto;
+  background-color: lightgreen;
+}
+
+@font-face {
+  font-family: "NeoDunggeunmo";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./fonts/NeoDunggeunmoPro-Regular.woff2") format("woff2");
+}

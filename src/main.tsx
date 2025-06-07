@@ -7,6 +7,9 @@ import Settings from "./screens/Settings";
 import Result from "./screens/Result";
 import Scoreboard from "./screens/Scoreboard";
 
+import "./styles/index.css";
+import "./styles/normalize.css";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
