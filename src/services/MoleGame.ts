@@ -1,5 +1,6 @@
 import { produce } from "immer";
 import pickRandomFromArray from "@/utils/pickRandomFromArray";
+import calcSecondsRemaining from "@/utils/calcSecondsRemaining";
 
 interface Mole {
   isHit: boolean;
@@ -13,13 +14,15 @@ export class MoleGame {
   private INITIAL_SPAWN = 1_000;
 
   status: "IDLE" | "PLAYING" | "PAUSED" | "END";
-  score: number;
-  gameTime: number;
-  lastSpawnTime: number | null;
-  nextSpawnTime: number | null;
+  private score: number;
+  private gameTime: number;
+  private lastSpawnTime: number | null;
+  private nextSpawnTime: number | null;
 
-  holeStatus: Array<Mole | null>;
-  moles: number;
+  private holeStatus: Array<Mole | null>;
+  private moles: number;
+
+  private listeners: Array<() => void>;
 
   constructor(holes: number, moles: number) {
     this.status = "IDLE";
@@ -30,6 +33,8 @@ export class MoleGame {
 
     this.holeStatus = Array.from({ length: holes }, () => null);
     this.moles = moles;
+
+    this.listeners = [];
   }
 
   start() {
@@ -80,9 +85,22 @@ export class MoleGame {
 
     this.gameTime += deltaTime;
 
+    const prevRemainSeconds = calcSecondsRemaining(
+      this.GAME_DURATION - this.gameTime - deltaTime
+    );
+    const currentRemainSeconds = calcSecondsRemaining(
+      this.GAME_DURATION - this.gameTime
+    );
+
+    let hasChanged = false;
+
+    if (prevRemainSeconds !== currentRemainSeconds) {
+      hasChanged = true;
+    }
+
     if (this.gameTime >= this.GAME_DURATION) {
       this.end();
-      return;
+      hasChanged = true;
     }
 
     if (this.lastSpawnTime !== null) {
@@ -90,6 +108,8 @@ export class MoleGame {
         this.clearHoles();
 
         this.lastSpawnTime = null;
+
+        hasChanged = true;
       }
     }
 
@@ -99,7 +119,13 @@ export class MoleGame {
 
         this.lastSpawnTime = this.gameTime;
         this.nextSpawnTime = this.gameTime + this.SPAWN_INTERVAL;
+
+        hasChanged = true;
       }
+    }
+
+    if (hasChanged) {
+      this.notify();
     }
   }
 
@@ -134,5 +160,29 @@ export class MoleGame {
     this.score++;
 
     return true;
+  }
+
+  private notify() {
+    this.listeners.forEach((listener) => listener());
+  }
+
+  subscribe(listener: () => void) {
+    this.listeners.push(listener);
+
+    return () => {
+      this.listeners = this.listeners.filter((l) => l !== listener);
+    };
+  }
+
+  getState() {
+    return {
+      status: this.status,
+      score: this.score,
+      timeRemaining: Math.max(
+        0,
+        calcSecondsRemaining(this.GAME_DURATION - this.gameTime)
+      ),
+      holeStatus: this.holeStatus,
+    };
   }
 }
