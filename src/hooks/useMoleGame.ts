@@ -71,13 +71,19 @@ function useMoleGame({ holes, moles }: { holes: number; moles: number }) {
     startLoop();
   }, [game, startLoop]);
 
-  const resetGame = useCallback(() => {
+  const restartGame = useCallback(() => {
     stopLoop();
     game.reset();
-  }, [game, stopLoop]);
+    game.start();
+    startLoop();
+  }, [game, startLoop, stopLoop]);
 
   const hitHole = useCallback(
     (holeIndex: number) => {
+      if (game.status !== "PLAYING") {
+        return;
+      }
+
       return game.hit(holeIndex);
     },
     [game]
@@ -87,7 +93,7 @@ function useMoleGame({ holes, moles }: { holes: number; moles: number }) {
     return () => stopLoop();
   }, [stopLoop]);
 
-  return { startGame, pauseGame, resumeGame, resetGame, hitHole, gameState };
+  return { startGame, pauseGame, resumeGame, restartGame, hitHole, gameState };
 }
 
 export default useMoleGame;
