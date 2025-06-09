@@ -71,12 +71,10 @@ function useMoleGame({ holes, moles }: { holes: number; moles: number }) {
     startLoop();
   }, [game, startLoop]);
 
-  const restartGame = useCallback(() => {
+  const resetGame = useCallback(() => {
     stopLoop();
     game.reset();
-    game.start();
-    startLoop();
-  }, [game, startLoop, stopLoop]);
+  }, [game, stopLoop]);
 
   const hitHole = useCallback(
     (holeIndex: number) => {
@@ -93,7 +91,7 @@ function useMoleGame({ holes, moles }: { holes: number; moles: number }) {
     return () => stopLoop();
   }, [stopLoop]);
 
-  return { startGame, pauseGame, resumeGame, restartGame, hitHole, gameState };
+  return { startGame, pauseGame, resumeGame, resetGame, hitHole, gameState };
 }
 
 export default useMoleGame;

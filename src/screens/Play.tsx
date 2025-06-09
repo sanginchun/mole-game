@@ -1,9 +1,10 @@
 import useMoleGame from "@/hooks/useMoleGame";
 import useGameSettingStore from "@/store/game-setting";
+import { Link } from "react-router";
 
 const Play = () => {
   const settings = useGameSettingStore((state) => state.settings);
-  const { startGame, pauseGame, resumeGame, restartGame, gameState, hitHole } =
+  const { startGame, pauseGame, resumeGame, resetGame, gameState, hitHole } =
     useMoleGame({
       holes: settings.rows * settings.cols,
       moles: settings.moles,
@@ -37,17 +38,19 @@ const Play = () => {
         ))}
       </div>
       <button onClick={startGame} disabled={gameState.status !== "IDLE"}>
-        Start
+        시작하기
       </button>
-      <button onClick={pauseGame} disabled={gameState.status !== "PLAYING"}>
-        Pause
-      </button>
-      <button onClick={resumeGame} disabled={gameState.status !== "PAUSED"}>
-        Resume
-      </button>
-      <button onClick={restartGame} disabled={gameState.status !== "PAUSED"}>
-        Restart
-      </button>
+      {gameState.status === "PLAYING" && (
+        <>
+          <button onClick={pauseGame}>일시정지</button>
+          <Link to="/">
+            <button onClick={resetGame}>그만하기</button>
+          </Link>
+        </>
+      )}
+      {gameState.status === "PAUSED" && (
+        <button onClick={resumeGame}>재개하기</button>
+      )}
     </main>
   );
 };
