@@ -1,6 +1,9 @@
+import { useEffect } from "react";
 import useMoleGame from "@/hooks/useMoleGame";
+import useGameResultStore from "@/store/game-result";
 import useGameSettingStore from "@/store/game-setting";
-import { Link } from "react-router";
+
+import { Link, useNavigate } from "react-router";
 
 const Play = () => {
   const settings = useGameSettingStore((state) => state.settings);
@@ -9,6 +12,15 @@ const Play = () => {
       holes: settings.rows * settings.cols,
       moles: settings.moles,
     });
+  const setGameResult = useGameResultStore((state) => state.setCurrentResult);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (gameState.status === "END") {
+      setGameResult({ playedAt: Date.now(), score: gameState.score });
+      navigate("/result");
+    }
+  }, [gameState.status, gameState.score, setGameResult, navigate]);
 
   return (
     <main>
@@ -37,20 +49,18 @@ const Play = () => {
           </div>
         ))}
       </div>
-      <button onClick={startGame} disabled={gameState.status !== "IDLE"}>
-        시작하기
-      </button>
+      {gameState.status === "IDLE" && (
+        <button onClick={startGame}>시작하기</button>
+      )}
       {gameState.status === "PLAYING" && (
-        <>
-          <button onClick={pauseGame}>일시정지</button>
-          <Link to="/">
-            <button onClick={resetGame}>그만하기</button>
-          </Link>
-        </>
+        <button onClick={pauseGame}>일시정지</button>
       )}
       {gameState.status === "PAUSED" && (
         <button onClick={resumeGame}>재개하기</button>
       )}
+      <Link to="/">
+        <button onClick={resetGame}>그만하기</button>
+      </Link>
     </main>
   );
 };
