@@ -13,8 +13,9 @@ type HoleStatus = Array<Mole | null>;
 export class MoleGame {
   private GAME_DURATION = 60_000;
   private SPAWN_INTERVAL = 2_000;
-  private VISIBLE_DURATION = 1_000;
-  private INITIAL_SPAWN = 1_000;
+  private DEFAULT_VISIBLE_DURATION = 1500;
+  private MIN_VISIBLE_DURATION = 800;
+  private INITIAL_SPAWN = 500;
 
   status: GameStatus;
   private score: number;
@@ -117,7 +118,7 @@ export class MoleGame {
     }
 
     if (this.lastSpawnTime !== null) {
-      if (this.gameTime >= this.lastSpawnTime + this.VISIBLE_DURATION) {
+      if (this.gameTime >= this.lastSpawnTime + this.calcVisibleDuration()) {
         this.clearHoles();
 
         this.lastSpawnTime = null;
@@ -140,6 +141,15 @@ export class MoleGame {
     if (hasChanged) {
       this.notify();
     }
+  }
+
+  private calcVisibleDuration() {
+    const remainRatio =
+      (this.GAME_DURATION - this.gameTime) / this.GAME_DURATION;
+    const durationDiff =
+      this.DEFAULT_VISIBLE_DURATION - this.MIN_VISIBLE_DURATION;
+
+    return this.MIN_VISIBLE_DURATION + durationDiff * remainRatio;
   }
 
   private clearHoles() {
