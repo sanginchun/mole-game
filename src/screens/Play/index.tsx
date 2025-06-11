@@ -23,7 +23,9 @@ const Play = () => {
   }, [gameState.status, gameState.score, setGameResult, navigate]);
 
   return (
-    <main>
+    <main
+      style={{ display: "flex", flexDirection: "column", height: "100dvh" }}
+    >
       <div>{gameState.score}</div>
       <div>{gameState.timeRemaining}</div>
       <div
@@ -32,7 +34,8 @@ const Play = () => {
           gridTemplateColumns: `repeat(${settings.cols}, 1fr)`,
           gridTemplateRows: `repeat(${settings.rows}, 1fr)`,
           gap: "1rem",
-          height: "80%",
+          width: "100%",
+          flexGrow: 1,
         }}
       >
         {gameState.holeStatus.map((v, i) => (

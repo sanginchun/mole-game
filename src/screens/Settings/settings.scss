@@ -1,0 +1,105 @@
+@use "/src/styles/global.scss";
+
+.settings {
+  @include global.flexbox;
+
+  height: 100%;
+
+  .title {
+    font-size: 3rem;
+    @include global.text-shadow(0.25rem);
+  }
+
+  .area {
+    @include global.flexbox;
+
+    width: 100%;
+    gap: 1rem;
+    padding: 2rem;
+    padding-top: 0;
+    margin: 1rem;
+    background-color: #ffffff55;
+    border-radius: 1.5rem;
+
+    .sub-title {
+      font-size: 2rem;
+      @include global.text-shadow(0.15rem);
+      transform: translateY(-50%);
+    }
+
+    .desc {
+      color: global.$dark-gray;
+      font-size: 1.5rem;
+      font-weight: bold;
+
+      &.mole {
+        margin-top: 1.2rem;
+      }
+    }
+  }
+
+  .hole-setting-buttons {
+    @include global.flexbox;
+
+    flex-direction: row;
+    gap: 1rem;
+
+    label {
+      font-size: 1.3rem;
+    }
+
+    .button-container {
+      @include global.flexbox;
+
+      flex-direction: row;
+      gap: 1rem;
+      margin: 0.5rem 0;
+    }
+
+    button {
+      @include global.classic-button;
+
+      font-size: 1.4rem;
+      background-color: global.$brown-white;
+      color: global.$dark-gray;
+
+      &.selected {
+        background-color: global.$brown;
+        color: global.$brown-white;
+      }
+    }
+  }
+
+  .mole-settings {
+    @include global.flexbox;
+
+    flex-direction: row;
+    gap: 0.8rem;
+
+    button {
+      @include global.classic-button;
+
+      font-size: 1.2rem;
+
+      &.plus-minus {
+        font-size: 1.5rem;
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+      }
+    }
+
+    .num {
+      font-size: 2rem;
+      margin: 0 1rem;
+    }
+  }
+
+  .play-button {
+    @include global.classic-button(1.7rem);
+
+    text-decoration: none;
+    background-color: global.$brown;
+    margin: 1.5rem;
+    width: 20rem;
+  }
+}
