@@ -2,5 +2,5 @@
   font-family: "NeoDunggeunmo";
   font-style: normal;
   font-weight: 400;
-  src: url("./fonts/NeoDunggeunmoPro-Regular.woff2") format("woff2");
+  src: url("@/assets/font/NeoDunggeunmoPro-Regular.woff2") format("woff2");
 }
