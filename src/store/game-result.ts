@@ -44,6 +44,7 @@ const useGameResultStore = create<GameResultState>()(
     }),
     {
       name: STORAGE_KEY,
+      partialize: (state) => ({ topScores: state.topScores }),
     }
   )
 );

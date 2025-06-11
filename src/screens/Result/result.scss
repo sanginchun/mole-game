@@ -1,0 +1,52 @@
+@use "/src/styles/global.scss";
+
+.result {
+  @include global.flexbox;
+
+  gap: 4rem;
+  height: 100%;
+
+  section {
+    @include global.flexbox;
+
+    gap: 1rem;
+
+    @include global.transparent-area;
+  }
+
+  .title {
+    font-size: 2.5rem;
+    @include global.text-shadow(0.2rem);
+  }
+
+  .new-record {
+    color: global.$red;
+    font-size: 1.5rem;
+    @include global.text-shadow(0.125rem);
+  }
+
+  p {
+    position: relative;
+    font-size: 2rem;
+    @include global.text-shadow(0.125rem);
+
+    margin-bottom: 2rem;
+  }
+
+  nav {
+    @include global.flexbox;
+
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .link-button {
+    @include global.classic-button(1.5rem);
+
+    text-decoration: none;
+
+    &.play {
+      background-color: global.$brown;
+    }
+  }
+}

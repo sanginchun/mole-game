@@ -13,13 +13,9 @@
   .area {
     @include global.flexbox;
 
-    width: 100%;
     gap: 1rem;
-    padding: 2rem;
-    padding-top: 0;
-    margin: 1rem;
-    background-color: #ffffff55;
-    border-radius: 1.5rem;
+
+    @include global.transparent-area;
 
     .sub-title {
       font-size: 2rem;

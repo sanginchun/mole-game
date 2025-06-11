@@ -46,6 +46,15 @@ $red: #dc2626;
   }
 }
 
+@mixin transparent-area {
+  width: 100%;
+  padding: 2rem;
+  padding-top: 0;
+  margin: 1rem;
+  background-color: #ffffff55;
+  border-radius: 1.5rem;
+}
+
 * {
   font-family: "NeoDunggeunmo";
   box-sizing: border-box;
