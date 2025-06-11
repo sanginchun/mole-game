@@ -5,6 +5,8 @@ import useGameSettingStore from "@/store/game-setting";
 
 import { Link, useNavigate } from "react-router";
 
+import "./play.scss";
+
 const Play = () => {
   const settings = useGameSettingStore((state) => state.settings);
   const { startGame, pauseGame, resumeGame, resetGame, gameState, hitHole } =
@@ -23,47 +25,66 @@ const Play = () => {
   }, [gameState.status, gameState.score, setGameResult, navigate]);
 
   return (
-    <main
-      style={{ display: "flex", flexDirection: "column", height: "100dvh" }}
-    >
-      <div>{gameState.score}</div>
-      <div>{gameState.timeRemaining}</div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${settings.cols}, 1fr)`,
-          gridTemplateRows: `repeat(${settings.rows}, 1fr)`,
-          gap: "1rem",
-          width: "100%",
-          flexGrow: 1,
-        }}
-      >
-        {gameState.holeStatus.map((v, i) => (
-          <div
-            key={i}
-            style={{
-              color: "white",
-              backgroundColor:
-                v === null ? "lightyellow" : v.isHit ? "red" : "brown",
-            }}
-            onClick={() => hitHole(i)}
-          >
-            {v === null ? "" : `${v.isHit ? "hit !!!" : ""}`}
-          </div>
-        ))}
-      </div>
-      {gameState.status === "IDLE" && (
-        <button onClick={startGame}>시작하기</button>
-      )}
-      {gameState.status === "PLAYING" && (
-        <button onClick={pauseGame}>일시정지</button>
-      )}
-      {gameState.status === "PAUSED" && (
-        <button onClick={resumeGame}>재개하기</button>
-      )}
-      <Link to="/">
-        <button onClick={resetGame}>그만하기</button>
-      </Link>
+    <main className="play">
+      <section className="game-status" aria-label="게임 현황">
+        <div>
+          <h2>점수</h2>
+          <output htmlFor="game-area" aria-live="polite">
+            {gameState.score}
+          </output>
+        </div>
+        <div>
+          <h2>남은 시간</h2>
+          <output htmlFor="game-area" aria-live="polite">
+            {gameState.timeRemaining}
+          </output>
+        </div>
+      </section>
+      <section id="game-area" aria-label="게임 영역">
+        <div
+          className={`game-grid grid-${settings.cols}-${settings.rows}`}
+          aria-label="게임판"
+          role="grid"
+        >
+          {gameState.holeStatus.map((v, i) => {
+            const hasMole = v !== null;
+            const moleIsHit = hasMole && v.isHit;
+
+            return (
+              <div
+                key={i}
+                className="grid-cell"
+                aria-label="구멍"
+                role="gridcell"
+              >
+                <div className="hole" />
+                <button
+                  className={`mole-button ${hasMole ? "" : "hide"} ${moleIsHit ? "hit" : ""}`}
+                  onClick={() => hitHole(i)}
+                  disabled={
+                    !hasMole || gameState.status !== "PLAYING" || moleIsHit
+                  }
+                  aria-label={`${hasMole ? "두더지 있음" : "두더지 없음"}`}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </section>
+      <section className="game-control" aria-label="게임 조작">
+        {gameState.status === "IDLE" && (
+          <button onClick={startGame}>시작하기</button>
+        )}
+        {gameState.status === "PLAYING" && (
+          <button onClick={pauseGame}>일시정지</button>
+        )}
+        {gameState.status === "PAUSED" && (
+          <button onClick={resumeGame}>재개하기</button>
+        )}
+        <Link to="/" onClick={resetGame}>
+          그만하기
+        </Link>
+      </section>
     </main>
   );
 };
