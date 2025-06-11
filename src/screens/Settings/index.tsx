@@ -118,9 +118,14 @@ const Settings = () => {
           </button>
         </div>
       </section>
-      <Link className="play-button" to="/play" aria-label="게임 시작하기">
-        시작
-      </Link>
+      <nav>
+        <Link className="play-button" to="/play" aria-label="게임 시작하기">
+          시작
+        </Link>
+        <Link className="scoreboard-link" to="/scoreboard">
+          순위
+        </Link>
+      </nav>
     </main>
   );
 };

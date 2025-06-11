@@ -90,12 +90,21 @@
     }
   }
 
-  .play-button {
-    @include global.classic-button(1.7rem);
+  nav {
+    @include global.flexbox;
+    margin-top: 1.5rem;
+    gap: 1.5rem;
 
-    text-decoration: none;
-    background-color: global.$brown;
-    margin: 1.5rem;
-    width: 20rem;
+    .play-button,
+    .scoreboard-link {
+      @include global.classic-button(1.7rem);
+
+      text-decoration: none;
+      width: 20rem;
+    }
+
+    .play-button {
+      background-color: global.$brown;
+    }
   }
 }
