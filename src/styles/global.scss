@@ -2,6 +2,7 @@ $background: #4ade80;
 $brown: #78350f;
 $brown-white: #fffbeb;
 $dark-gray: #222;
+$medium-gray: #666;
 $red: #dc2626;
 
 @mixin flexbox {
@@ -21,7 +22,7 @@ $red: #dc2626;
   padding: 0.375 * $size $size;
   text-align: center;
   color: white;
-  background-color: #666;
+  background-color: $medium-gray;
   border: unset;
   box-shadow:
     0px 0.125 * $size black,

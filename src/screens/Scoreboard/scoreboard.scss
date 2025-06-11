@@ -1,0 +1,83 @@
+@use "/src/styles/global.scss";
+
+.scoreboard {
+  @include global.flexbox;
+
+  gap: 2rem;
+  height: 100%;
+
+  section {
+    @include global.flexbox;
+    @include global.transparent-area;
+
+    overflow-y: hidden;
+    flex-grow: 1;
+
+    .title {
+      font-size: 2.5rem;
+      @include global.text-shadow(0.2rem);
+    }
+
+    p {
+      font-size: 1.8rem;
+    }
+  }
+
+  ol {
+    flex: 1 0 0;
+    width: 100%;
+    list-style: none;
+    overflow-y: scroll;
+
+    li {
+      position: relative;
+      @include global.flexbox;
+
+      width: max-content;
+      margin: 1.2rem auto;
+      gap: 0.8rem;
+
+      &.current {
+        color: global.$red;
+      }
+
+      .rank {
+        font-size: 1.6rem;
+        @include global.text-shadow(0.1rem);
+      }
+
+      .score {
+        font-size: 2rem;
+        margin-left: 1rem;
+      }
+
+      .datetime {
+        font-size: 1.2rem;
+        color: global.$medium-gray;
+      }
+    }
+  }
+
+  nav {
+    @include global.flexbox;
+
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .link-button,
+  .reset-button {
+    @include global.classic-button(1.5rem);
+
+    text-decoration: none;
+
+    &.play-button {
+      background-color: global.$brown;
+    }
+  }
+
+  .reset-button {
+    background-color: global.$red;
+  }
+}
