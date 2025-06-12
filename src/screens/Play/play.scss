@@ -107,6 +107,8 @@
       background: center center / contain no-repeat
         url("@/assets/images/mole.png");
 
+      -webkit-tap-highlight-color: transparent;
+
       &.hide,
       &.hit {
         transform: translateY(100%);
