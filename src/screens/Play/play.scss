@@ -101,14 +101,15 @@
       height: 100%;
       left: 0;
       bottom: 0;
-      transition: bottom ease-in-out 0.3s;
+      transition: transform 0.3s ease-in-out;
+      transform: translateY(0);
       border: none;
       background: center center / contain no-repeat
         url("@/assets/images/mole.png");
 
       &.hide,
       &.hit {
-        bottom: -100%;
+        transform: translateY(100%);
       }
     }
   }
