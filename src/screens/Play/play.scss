@@ -32,6 +32,7 @@
   }
 
   section#game-area {
+    position: relative;
     width: 100%;
     flex: 1 0 0;
 
@@ -112,6 +113,33 @@
       &.hide,
       &.hit {
         transform: translateY(100%);
+      }
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: global.$brown-white;
+      opacity: 0.95;
+      border-radius: 1rem;
+      padding: 1rem;
+
+      &.playing,
+      &.stop {
+        display: none;
+      }
+
+      p {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        white-space: pre-line;
+        text-align: center;
+        line-height: 1.5;
       }
     }
   }

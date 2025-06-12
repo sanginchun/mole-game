@@ -70,7 +70,7 @@ export class MoleGame {
 
   pause() {
     if (this.status !== "PLAYING") {
-      console.error("Game is not PLAYING");
+      console.warn("Game is not PLAYING");
       return;
     }
 

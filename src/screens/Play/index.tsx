@@ -18,6 +18,20 @@ const Play = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.addEventListener("visibilitychange", pauseOnHidden);
+
+    function pauseOnHidden() {
+      if (document.hidden) {
+        pauseGame();
+      }
+    }
+
+    return () => {
+      document.removeEventListener("visibilitychange", pauseOnHidden);
+    };
+  }, [pauseGame]);
+
+  useEffect(() => {
     if (gameState.status === "END") {
       setGameResult({ playedAt: Date.now(), score: gameState.score });
       navigate("/result");
@@ -69,6 +83,11 @@ const Play = () => {
               </div>
             );
           })}
+        </div>
+        <div className={`overlay ${gameState.status.toLowerCase()}`}>
+          <p>
+            {`아래 ${gameState.status === "IDLE" ? "시작하기" : "재개하기"} 버튼을 누르면\n게임이 ${gameState.status === "IDLE" ? "시작" : "재개"}됩니다.`}
+          </p>
         </div>
       </section>
       <section className="game-control" aria-label="게임 조작">
