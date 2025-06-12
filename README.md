@@ -1,54 +1,66 @@
-# React + TypeScript + Vite
+# 두더지 게임
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 기술 스택
 
-Currently, two official plugins are available:
+- React v19
+- React-Router
+- Sass
+- Zustand
+- Immer
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 개발 환경
 
-## Expanding the ESLint configuration
+- vite
+- eslint
+- prettier
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 실행 방법
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 패키지 설치 및 개발 서버 실행
+
+필요시 [pnpm 설치](https://pnpm.io/installation) 후,
+
+```bash
+# 의존성 설치
+pnpm install
+
+# 개발서버 실행
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 빌드
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# 빌드
+pnpm build
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+# 빌드 결과물 실행
+pnpm preview
 ```
+
+## 프로젝트 구조
+
+```
+src/
+├── assets/             # 정적 리소스
+├── configs/            # UI 사용자 설정값 관련 상수
+├── hooks/
+│   └── useMoleGame.ts  # 게임 로직과 리액트 연결 훅
+├── screens/            # 페이지 각각에 컴포넌트 및 스타일링
+│   ├── layout/         # 공통 레이아웃
+│   ├── Settings/       # 시작 화면
+│   ├── Play/           # 게임 화면
+│   ├── Result/         # 결과 화면
+│   └── Scoreboard/     # 순위 화면
+├── services/
+│   └── MoleGame.ts     # 비즈니스(게임) 로직
+├── store/              # 전역 상태 관리
+│   ├── game-result.ts
+│   └── game-setting.ts
+├── styles/             # 전역 스타일
+└── utils/              # 유틸리티 함수
+```
+
+## 성능 개선 노력
+
+- 두더지 애니메이션 transition 속성을 `bottom`에서 `transform`으로 변경하여 Layout Shift를 줄였습니다.
