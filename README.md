@@ -60,7 +60,3 @@ src/
 ├── styles/             # 전역 스타일
 └── utils/              # 유틸리티 함수
 ```
-
-## 성능 개선 노력
-
-- 두더지 애니메이션 transition 속성을 `bottom`에서 `transform`으로 변경하여 Layout Shift를 줄였습니다.
